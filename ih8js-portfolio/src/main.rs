@@ -1,7 +1,9 @@
 use leptos::mount::mount_to_body;
 use leptos::prelude::*;
 mod knob;
+mod rotary_encoder_demo;
 use knob::*;
+use rotary_encoder_demo::*;
 
 #[component]
 fn App() -> impl IntoView {
@@ -25,13 +27,15 @@ fn App() -> impl IntoView {
 
             // Section 2: Interactive Knobs
             <section class="h-screen w-full snap-start flex justify-center items-center bg-slate-900/50">
-                <div class="bg-slate-800/80 p-12 rounded-3xl border border-slate-700 shadow-2xl backdrop-blur-md">
+                <div class="bg-slate-800/80 p-12 rounded-3xl border border-slate-700 shadow-2xl backdrop-blur-md flex gap-16 items-center">
                     <div class="grid grid-cols-3 gap-12">
 
                         { (0..6).map(|_| view! { <Knob /> }).collect_view() }
 
                     </div>
+
                 </div>
+                <RotaryEncoderDemo />
             </section>
 
         </main>
