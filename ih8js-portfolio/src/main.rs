@@ -9,6 +9,7 @@ use rotary_encoder::*;
 fn App() -> impl IntoView {
     let channel_a = RwSignal::new(false);
     let channel_b = RwSignal::new(false);
+    let channel_c = RwSignal::new(false);
 
     view! {
         <main class="h-screen w-full overflow-y-scroll snap-y snap-mandatory bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 text-slate-300 font-sans">
@@ -33,12 +34,12 @@ fn App() -> impl IntoView {
                 <div class="bg-slate-800/80 p-12 rounded-3xl border border-slate-700 shadow-2xl backdrop-blur-md flex gap-16 items-center">
                     <div class="grid grid-cols-3 gap-12">
 
-                        { (0..6).map(|_| view! { <Knob channel_a channel_b /> }).collect_view() }
+                        { (0..6).map(|_| view! { <Knob channel_a channel_b channel_c /> }).collect_view() }
 
                     </div>
 
                 </div>
-                <RotaryEncoder channel_a channel_b />
+                <RotaryEncoder channel_a channel_b channel_c />
             </section>
 
         </main>

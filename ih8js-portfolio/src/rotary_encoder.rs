@@ -3,13 +3,14 @@ use std::collections::VecDeque;
 use std::time::Duration;
 
 #[component]
-pub fn RotaryEncoder(channel_a: RwSignal<bool>, channel_b: RwSignal<bool>) -> impl IntoView {
+pub fn RotaryEncoder(channel_a: RwSignal<bool>, channel_b: RwSignal<bool>, channel_c: RwSignal<bool>) -> impl IntoView {
     let history = RwSignal::new(VecDeque::new());
 
     fn sample_signals(
-        hist: RwSignal<VecDeque<(bool, bool)>>,
+        hist: RwSignal<VecDeque<(bool, bool, bool)>>,
         a: RwSignal<bool>,
         b: RwSignal<bool>,
+        c: RwSignal<bool>,
     ) {
         set_timeout(
             move || {
@@ -17,21 +18,25 @@ pub fn RotaryEncoder(channel_a: RwSignal<bool>, channel_b: RwSignal<bool>) -> im
                     if h.len() >= 100 {
                         h.pop_front();
                     }
-                    h.push_back((a.get_untracked(), b.get_untracked()));
+                    h.push_back((
+                        a.get_untracked(),
+                        b.get_untracked(),
+                        c.get_untracked(),
+                    ));
                 });
-                sample_signals(hist, a, b);
+                sample_signals(hist, a, b, c);
             },
             Duration::from_millis(20),
         );
     }
-    sample_signals(history, channel_a, channel_b);
+    sample_signals(history, channel_a, channel_b, channel_c);
 
     let points_a = move || {
         history
             .read()
             .iter()
             .enumerate()
-            .map(|(i, (a, _))| format!("{},{}", i * 10, if *a { 10 } else { 50 }))
+            .map(|(i, (a, _, _))| format!("{},{}", i * 10, if *a { 10 } else { 50 }))
             .collect::<Vec<_>>()
             .join(" ")
     };
@@ -41,7 +46,17 @@ pub fn RotaryEncoder(channel_a: RwSignal<bool>, channel_b: RwSignal<bool>) -> im
             .read()
             .iter()
             .enumerate()
-            .map(|(i, (_, b))| format!("{},{}", i * 10, if *b { 70 } else { 110 }))
+            .map(|(i, (_, b, _))| format!("{},{}", i * 10, if *b { 70 } else { 110 }))
+            .collect::<Vec<_>>()
+            .join(" ")
+    };
+
+    let points_c = move || {
+        history
+            .read()
+            .iter()
+            .enumerate()
+            .map(|(i, (_, _, c))| format!("{},{}", i * 10, if *c { 130 } else { 170 }))
             .collect::<Vec<_>>()
             .join(" ")
     };
@@ -54,9 +69,10 @@ pub fn RotaryEncoder(channel_a: RwSignal<bool>, channel_b: RwSignal<bool>) -> im
             <div class="flex justify-between text-xs font-mono mb-2 relative z-10 font-bold">
                 <span class="text-indigo-400">"CH A"</span>
                 <span class="text-cyan-400">"CH B"</span>
+                <span class="text-emerald-400">"CH C"</span>
             </div>
 
-            <svg class="w-full h-32 relative z-10" viewBox="0 0 1000 120" preserveAspectRatio="none">
+            <svg class="w-full h-44 relative z-10" viewBox="0 0 1000 180" preserveAspectRatio="none">
                 <polyline
                     points=points_a
                     fill="none"
@@ -68,6 +84,13 @@ pub fn RotaryEncoder(channel_a: RwSignal<bool>, channel_b: RwSignal<bool>) -> im
                     points=points_b
                     fill="none"
                     stroke="#22d3ee"
+                    stroke-width="4"
+                    stroke-linejoin="round"
+                />
+                <polyline
+                    points=points_c
+                    fill="none"
+                    stroke="#34d399"
                     stroke-width="4"
                     stroke-linejoin="round"
                 />
