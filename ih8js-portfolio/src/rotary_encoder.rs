@@ -2,8 +2,14 @@ use leptos::prelude::*;
 use std::collections::VecDeque;
 use std::time::Duration;
 
+const PICO_SVG: &str = include_str!("../pico.svg");
+
 #[component]
-pub fn RotaryEncoder(channel_a: RwSignal<bool>, channel_b: RwSignal<bool>, channel_c: RwSignal<bool>) -> impl IntoView {
+pub fn RotaryEncoder(
+    channel_a: RwSignal<bool>,
+    channel_b: RwSignal<bool>,
+    channel_c: RwSignal<bool>,
+) -> impl IntoView {
     let history = RwSignal::new(VecDeque::new());
 
     fn sample_signals(
@@ -18,11 +24,7 @@ pub fn RotaryEncoder(channel_a: RwSignal<bool>, channel_b: RwSignal<bool>, chann
                     if h.len() >= 100 {
                         h.pop_front();
                     }
-                    h.push_back((
-                        a.get_untracked(),
-                        b.get_untracked(),
-                        c.get_untracked(),
-                    ));
+                    h.push_back((a.get_untracked(), b.get_untracked(), c.get_untracked()));
                 });
                 sample_signals(hist, a, b, c);
             },
@@ -95,6 +97,10 @@ pub fn RotaryEncoder(channel_a: RwSignal<bool>, channel_b: RwSignal<bool>, chann
                     stroke-linejoin="round"
                 />
             </svg>
+        </div>
+
+        <div class="w-full flex justify-center mt-4">
+            <div inner_html=PICO_SVG></div>
         </div>
     }
 }
