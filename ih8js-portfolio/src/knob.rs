@@ -1,7 +1,8 @@
 use leptos::prelude::*;
+use std::time::Duration;
 
 #[component]
-pub fn Knob() -> impl IntoView {
+pub fn Knob(channel_a: RwSignal<bool>, channel_b: RwSignal<bool>) -> impl IntoView {
     let (rotation, set_rotation) = signal(0.0);
     let (last_step_time, set_last_step_time) = signal(0.0);
 
@@ -13,7 +14,7 @@ pub fn Knob() -> impl IntoView {
             .map(|p| p.now())
             .unwrap_or(0.0);
 
-        let cooldown_ms = 180.0;
+        let cooldown_ms = 450.0;
 
         if now - last_step_time.get_untracked() >= cooldown_ms {
             let step_size = 30.0;
@@ -21,9 +22,49 @@ pub fn Knob() -> impl IntoView {
             if ev.delta_y() > 0.0 {
                 set_rotation.update(|r| *r -= step_size);
                 set_last_step_time.set(now);
+
+                channel_b.set(true);
+                set_timeout(
+                    move || {
+                        channel_a.set(true);
+                        set_timeout(
+                            move || {
+                                channel_b.set(false);
+                                set_timeout(
+                                    move || {
+                                        channel_a.set(false);
+                                    },
+                                    Duration::from_millis(100),
+                                );
+                            },
+                            Duration::from_millis(100),
+                        );
+                    },
+                    Duration::from_millis(100),
+                );
             } else if ev.delta_y() < 0.0 {
                 set_rotation.update(|r| *r += step_size);
                 set_last_step_time.set(now);
+
+                channel_a.set(true);
+                set_timeout(
+                    move || {
+                        channel_b.set(true);
+                        set_timeout(
+                            move || {
+                                channel_a.set(false);
+                                set_timeout(
+                                    move || {
+                                        channel_b.set(false);
+                                    },
+                                    Duration::from_millis(100),
+                                );
+                            },
+                            Duration::from_millis(100),
+                        );
+                    },
+                    Duration::from_millis(100),
+                );
             }
         }
     };
