@@ -1,7 +1,9 @@
 use leptos::mount::mount_to_body;
 use leptos::prelude::*;
+mod icon_slider;
 mod knob;
 mod rotary_encoder;
+use icon_slider::*;
 use knob::*;
 use rotary_encoder::*;
 
@@ -30,26 +32,35 @@ fn App() -> impl IntoView {
             </section>
 
             // Section 2: Interactive Knobs
-            <section class="h-screen w-full snap-start flex flex-col p-12 bg-slate-900/50">
-                <h1 class="text-6xl font-bold text-white mb-12 text-center w-full">
+            <section class="h-screen w-full snap-start flex flex-col p-8 bg-slate-900/50">
+                <h1 class="text-6xl font-bold text-white mb-8 text-center w-full">
                     Pico Mixer
                 </h1>
 
                 {/* Middle Content: Left and Right Split */}
                 <div class="flex flex-row flex-1 justify-between items-center w-full">
 
-                    <div class="flex flex-col gap-8 items-start w-1/2">
+                    <div class="flex flex-col gap-6 items-start w-1/2">
                         <div class="w-96 h-40" inner_html=PICO_SVG></div>
 
-                        <div class="bg-slate-800/80 p-12 rounded-3xl border border-slate-700 shadow-2xl backdrop-blur-md">
-                            <div class="grid grid-cols-3 gap-12">
+                        <div class="bg-slate-800/80 p-6 rounded-3xl border border-slate-700 shadow-2xl backdrop-blur-md">
+                            <div class="grid grid-cols-3 gap-8">
                                 { (0..6).map(|_| view! { <Knob channel_a channel_b channel_c /> }).collect_view() }
                             </div>
                         </div>
                     </div>
 
-                    <div class="flex flex-col gap-8 items-center justify-center w-1/2">
-                        {/* Add right-side elements here */}
+                    <div class="flex flex-col gap-6 items-end justify-center w-1/2">
+                        <div class="bg-slate-800/80 p-6 rounded-3xl border border-slate-700 shadow-2xl backdrop-blur-md">
+                            <div class="grid grid-cols-3 gap-8">
+                                {icon_sliders()
+                                    .into_iter()
+                                    .map(|(svg, val)| {
+                                        view! { <IconSlider icon=svg value=val /> }
+                                    })
+                                    .collect_view()}
+                            </div>
+                        </div>
                     </div>
 
                 </div>
