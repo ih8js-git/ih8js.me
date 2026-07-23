@@ -30,20 +30,34 @@ fn App() -> impl IntoView {
             </section>
 
             // Section 2: Interactive Knobs
-            <section class="h-screen w-full snap-start flex flex-col justify-center items-right gap-8 bg-slate-900/50">
-                <div class="w-96 h-40" inner_html=PICO_SVG></div>
-                <div class="flex items-center gap-8">
-                    <div class="bg-slate-800/80 p-12 rounded-3xl border border-slate-700 shadow-2xl backdrop-blur-md">
-                        <div class="grid grid-cols-3 gap-12">
+            <section class="h-screen w-full snap-start flex flex-col p-12 bg-slate-900/50">
+                <h1 class="text-6xl font-bold text-white mb-12 text-center w-full">
+                    Pico Mixer
+                </h1>
 
-                            { (0..6).map(|_| view! { <Knob channel_a channel_b channel_c /> }).collect_view() }
+                {/* Middle Content: Left and Right Split */}
+                <div class="flex flex-row flex-1 justify-between items-center w-full">
 
+                    <div class="flex flex-col gap-8 items-start w-1/2">
+                        <div class="w-96 h-40" inner_html=PICO_SVG></div>
+
+                        <div class="bg-slate-800/80 p-12 rounded-3xl border border-slate-700 shadow-2xl backdrop-blur-md">
+                            <div class="grid grid-cols-3 gap-12">
+                                { (0..6).map(|_| view! { <Knob channel_a channel_b channel_c /> }).collect_view() }
+                            </div>
                         </div>
+                    </div>
+
+                    <div class="flex flex-col gap-8 items-center justify-center w-1/2">
+                        {/* Add right-side elements here */}
                     </div>
 
                 </div>
 
-                <RotaryEncoder channel_a channel_b channel_c />
+                {/* Bottom: Rotary Encoder Full Width */}
+                <div class="w-full mt-auto flex justify-center pb-4">
+                    <RotaryEncoder channel_a channel_b channel_c />
+                </div>
             </section>
 
         </main>
