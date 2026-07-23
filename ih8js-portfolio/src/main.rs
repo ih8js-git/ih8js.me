@@ -40,7 +40,7 @@ fn App() -> impl IntoView {
                 {/* Middle Content: Left and Right Split */}
                 <div class="flex flex-row flex-1 justify-between items-center w-full">
 
-                    <div class="flex flex-col gap-6 items-start w-1/2">
+                    <div class="relative flex flex-col gap-6 items-start w-1/2">
                         <div class="w-96 h-40" inner_html=PICO_SVG></div>
 
                         <div class="bg-slate-800/80 p-6 rounded-3xl border border-slate-700 shadow-2xl backdrop-blur-md">
@@ -48,6 +48,13 @@ fn App() -> impl IntoView {
                                 { (0..6).map(|_| view! { <Knob channel_a channel_b channel_c /> }).collect_view() }
                             </div>
                         </div>
+
+                        <svg class="absolute inset-0 w-full h-full pointer-events-none" style="z-index:10;">
+                            <path d="M 100 212 C 120 180, 0 80, 33 10" stroke="#818cf8" stroke-width="3" fill="none" stroke-linecap="round" />
+                            <path d="M 28 212 C 10 180, 18 80, 14 10" stroke="#22d3ee" stroke-width="3" fill="none" stroke-linecap="round" />
+                            <path d="M 64 212 C 64 170, 42 80, 50 10" stroke="#000" stroke-width="3" fill="none" stroke-linecap="round" />
+                            <path d="M 64 292 C 64 310, 68 170, 68 10" stroke="#22c55e" stroke-width="3" fill="none" stroke-linecap="round" />
+                        </svg>
                     </div>
 
                     <div class="flex flex-col gap-6 items-end justify-center w-1/2">
