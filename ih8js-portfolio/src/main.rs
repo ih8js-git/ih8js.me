@@ -31,12 +31,16 @@ fn App() -> impl IntoView {
 
             // Section 2: Interactive Knobs
             <section class="h-screen w-full snap-start flex flex-col justify-center items-center gap-8 bg-slate-900/50">
-                <div class="bg-slate-800/80 p-12 rounded-3xl border border-slate-700 shadow-2xl backdrop-blur-md">
-                    <div class="grid grid-cols-3 gap-12">
+                <div class="w-96 h-40" inner_html=PICO_SVG></div>
+                <div class="flex items-center gap-8">
+                    <div class="bg-slate-800/80 p-12 rounded-3xl border border-slate-700 shadow-2xl backdrop-blur-md">
+                        <div class="grid grid-cols-3 gap-12">
 
-                        { (0..6).map(|_| view! { <Knob channel_a channel_b channel_c /> }).collect_view() }
+                            { (0..6).map(|_| view! { <Knob channel_a channel_b channel_c /> }).collect_view() }
 
+                        </div>
                     </div>
+
                 </div>
 
                 <RotaryEncoder channel_a channel_b channel_c />

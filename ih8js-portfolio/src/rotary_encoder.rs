@@ -2,7 +2,7 @@ use leptos::prelude::*;
 use std::collections::VecDeque;
 use std::time::Duration;
 
-const PICO_SVG: &str = include_str!("../pico.svg");
+pub const PICO_SVG: &str = include_str!("../pico.svg");
 
 #[component]
 pub fn RotaryEncoder(
@@ -97,10 +97,6 @@ pub fn RotaryEncoder(
                     stroke-linejoin="round"
                 />
             </svg>
-        </div>
-
-        <div class="w-full flex justify-center mt-4">
-            <div inner_html=PICO_SVG></div>
         </div>
     }
 }
