@@ -64,8 +64,16 @@ fn Wires(
                 <path d="M 64 212 C 64 170, 42 80, 50 10" stroke="#000" stroke-width="3" fill="none" stroke-linecap="round" />
             </g>
             <path
-                d="M 64 292 C 64 310, 68 170, 68 10"
+                d="M 78 292 C 78 310, 80 170, 70 10"
                 stroke="#22c55e"
+                stroke-width="3"
+                fill="none"
+                stroke-linecap="round"
+                style=move || format!("opacity:{};transition:opacity .3s ease", press_opacity.get())
+            />
+            <path
+                d="M 50 292 C 50 310, 50 170, 50 10"
+                stroke="#000"
                 stroke-width="3"
                 fill="none"
                 stroke-linecap="round"
