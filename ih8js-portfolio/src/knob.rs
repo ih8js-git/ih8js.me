@@ -2,7 +2,11 @@ use leptos::prelude::*;
 use std::time::Duration;
 
 #[component]
-pub fn Knob(channel_a: RwSignal<bool>, channel_b: RwSignal<bool>, channel_c: RwSignal<bool>) -> impl IntoView {
+pub fn Knob(
+    channel_a: RwSignal<bool>,
+    channel_b: RwSignal<bool>,
+    channel_c: RwSignal<bool>,
+) -> impl IntoView {
     let (rotation, set_rotation) = signal(0.0);
     let (last_step_time, set_last_step_time) = signal(0.0);
 

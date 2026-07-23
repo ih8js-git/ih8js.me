@@ -50,10 +50,38 @@ fn App() -> impl IntoView {
                         </div>
 
                         <svg class="absolute inset-0 w-full h-full pointer-events-none" style="z-index:10;">
-                            <path d="M 100 212 C 120 180, 0 80, 33 10" stroke="#818cf8" stroke-width="3" fill="none" stroke-linecap="round" />
-                            <path d="M 28 212 C 10 180, 18 80, 14 10" stroke="#22d3ee" stroke-width="3" fill="none" stroke-linecap="round" />
-                            <path d="M 64 212 C 64 170, 42 80, 50 10" stroke="#000" stroke-width="3" fill="none" stroke-linecap="round" />
-                            <path d="M 64 292 C 64 310, 68 170, 68 10" stroke="#22c55e" stroke-width="3" fill="none" stroke-linecap="round" />
+                            <path
+                                d="M 100 212 C 120 180, 0 80, 33 10"
+                                stroke="#818cf8"
+                                stroke-width="3"
+                                fill="none"
+                                stroke-linecap="round"
+                                class=move || if channel_a.get() || channel_b.get() { "" } else { "hidden" }
+                            />
+                            <path
+                                d="M 28 212 C 10 180, 18 80, 14 10"
+                                stroke="#22d3ee"
+                                stroke-width="3"
+                                fill="none"
+                                stroke-linecap="round"
+                                class=move || if channel_a.get() || channel_b.get() { "" } else { "hidden" }
+                            />
+                            <path
+                                d="M 64 212 C 64 170, 42 80, 50 10"
+                                stroke="#000"
+                                stroke-width="3"
+                                fill="none"
+                                stroke-linecap="round"
+                                class=move || if channel_a.get() || channel_b.get() { "" } else { "hidden" }
+                            />
+                            <path
+                                d="M 64 292 C 64 310, 68 170, 68 10"
+                                stroke="#22c55e"
+                                stroke-width="3"
+                                fill="none"
+                                stroke-linecap="round"
+                                class=move || if channel_c.get() { "" } else { "hidden" }
+                            />
                         </svg>
                     </div>
 
